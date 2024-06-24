@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('air_date');
-            $table->string('episode');
+            $table->string('episode')->unique();
             $table->string('url');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
