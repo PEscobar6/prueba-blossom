@@ -29,6 +29,11 @@ class Characters extends Model
         'location' => 'array'
     ];
 
+    public function episodes()
+    {
+        return $this->belongsToMany(Episodes::class, 'character_episode', 'character_id', 'episode_id');
+    }
+
     protected function origin(): Attribute
     {
         return Attribute::make(

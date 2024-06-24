@@ -77,7 +77,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return Attribute::make(
             set: fn ($value) => Hash::make($value),
-            get: fn ($value) => $value
         );
     }
 }

@@ -30,7 +30,7 @@ class CharactersController extends Controller
     public function show($id)
     {
         try {
-            $character = Characters::findOrFail($id);
+            $character = Characters::with('episodes')->findOrFail($id);
 
             return response()->json([
                 'message' => 'Character found',

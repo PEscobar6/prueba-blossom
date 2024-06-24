@@ -17,4 +17,9 @@ class Episodes extends Model
         'episode',
         'url',
     ];
+
+    public function characters()
+    {
+        return $this->belongsToMany(Characters::class, 'character_episode', 'episode_id', 'character_id');
+    }
 }

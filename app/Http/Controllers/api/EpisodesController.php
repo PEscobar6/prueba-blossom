@@ -73,7 +73,7 @@ class EpisodesController extends Controller
     public function show($id)
     {
         try {
-            $episode = Episodes::findOrFail($id);
+            $episode = Episodes::with('characters')->findOrFail($id);
             $data = [
                 'message' => 'Episode found',
                 'data' => $episode,

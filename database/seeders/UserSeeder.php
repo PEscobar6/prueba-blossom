@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,11 +13,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'example@example.com'],
+        User::updateOrCreate(
             [
-                'name' => 'User Test',
-                'password' => Hash::make('password'),
+                'email' => 'admin@blossom.com',
+                'name' => 'Admin',
+                'password' => 'blossom2024',
             ]
         );
     }

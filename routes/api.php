@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CharactersController;
+use App\Http\Controllers\api\EpisodeCharacterController;
 use App\Http\Controllers\api\EpisodesController;
 use App\Http\Controllers\api\UsersController;
 
@@ -30,7 +31,10 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [EpisodesController::class, 'store']);
         Route::put('/{id}', [EpisodesController::class, 'update']);
         Route::patch('/{id}', [EpisodesController::class, 'updatePartial']);
-        Route::delete('/{id}', [EpisodesController::class, 'destroy']);
+        Route::delete('/{id}', [EpisodesController::class, 'destroy']); 
+
+        // Assign characters to an episode
+        Route::post('/{episodeId}/characters', [EpisodeCharacterController::class, 'assignCharactersToEpisode']);
     });
     Route::group(['prefix' => 'characters'], function () {
         Route::get('/', [CharactersController::class, 'index']);
