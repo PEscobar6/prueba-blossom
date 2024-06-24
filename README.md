@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Rick and Morty API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una API RESTful para la gestión de personajes y episodios de la serie Rick and Morty, desarrollada con Laravel y MySQL.
 
-## About Laravel
+## Requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Docker
+- Docker Compose
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalación
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clona el repositorio:
 
-## Learning Laravel
+   ```bash
+   git clone https://github.com/tu-usuario/rick-and-morty-api.git
+   cd rick-and-morty-api
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Crea el archivo .env en la raíz del proyecto y copia el contenido del archivo .env.example. Asegúrate de configurar las variables de entorno adecuadamente:
+```
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:WKBAWe+K09EgOPAy3aPaD+xrknW1Tr35wfAGKfXrAxw=
+APP_DEBUG=true
+APP_URL=http://localhost
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=rickandmorty
+DB_USERNAME=root
+DB_PASSWORD=root
 
-## Laravel Sponsors
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-### Premium Partners
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
 
-## Contributing
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+JWT_SECRET=3QcDwXqZQi8NHQlUK9VWAO3eCYH1P5qAhX7PsJGZvqBDWltugJbL2R3JckO5Prqd
+```
 
-## Code of Conduct
+3. Construye y ejecuta los contenedores de Docker:
+```docker-compose up --build```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Una vez que los contenedores estén en funcionamiento, abre una nueva terminal y ejecuta las migraciones para preparar la base de datos:
+bash
+```docker-compose exec app php artisan migrate```
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Uso
+La aplicación estará disponible en `http://localhost:8000`.
 
-## License
+## Endpoints Disponibles
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Usuarios
+
+- `GET /api/v1/users` - Listar todos los usuarios
+- `GET /api/v1/users/{id}` - Obtener un usuario por ID
+- `POST /api/v1/users` - Crear un nuevo usuario
+- `PUT /api/v1/users/{id}` - Actualizar un usuario
+- `PATCH /api/v1/users/{id}` - Actualización parcial de un usuario
+- `DELETE /api/v1/users/{id}` - Eliminar un usuario
+
+### Episodios
+
+- `GET /api/v1/episodes` - Listar todos los episodios
+- `GET /api/v1/episodes/{id}` - Obtener un episodio por ID
+- `POST /api/v1/episodes` - Crear un nuevo episodio
+- `PUT /api/v1/episodes/{id}` - Actualizar un episodio
+- `PATCH /api/v1/episodes/{id}` - Actualización parcial de un episodio
+- `DELETE /api/v1/episodes/{id}` - Eliminar un episodio
+
+### Personajes
+
+- `GET /api/v1/characters` - Listar todos los personajes
+- `GET /api/v1/characters/{id}` - Obtener un personaje por ID y los episodios en los que aparece
+- `POST /api/v1/characters` - Crear un nuevo personaje
+- `PUT /api/v1/characters/{id}` - Actualizar un personaje
+- `PATCH /api/v1/characters/{id}` - Actualización parcial de un personaje
+- `DELETE /api/v1/characters/{id}` - Eliminar un personaje
+
+### Asignar personajes a episodios
+
+- `POST /api/v1/episodes/{episodeId}/characters` - Asignar personajes a un episodio
+
+## Notas
+
+- Asegúrate de que Docker y Docker Compose estén instalados en tu sistema.
+- Si encuentras problemas de conexión a la base de datos, asegúrate de que el servicio MySQL esté en funcionamiento y accesible desde el contenedor de la aplicación.
+- Puedes verificar el estado de los contenedores con el comando `docker-compose ps`.
+
+## Contribución
+
+Si deseas contribuir a este proyecto, por favor crea un fork del repositorio y envía un pull request con tus cambios.
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Para más detalles, revisa el archivo [LICENSE](LICENSE).
