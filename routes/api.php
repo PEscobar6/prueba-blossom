@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CharactersController;
 use App\Http\Controllers\api\EpisodesController;
@@ -12,9 +13,9 @@ Route::get('/health', function () {
     ], 200);
 });
 
-Route::post('/login', [UsersController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::group(['prefix' => 'v1'], function () {
+Route::middleware('auth:api')->group(function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UsersController::class, 'index']);
         Route::get('/{id}', [UsersController::class, 'show']);
