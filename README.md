@@ -6,6 +6,8 @@ Este proyecto es una API RESTful para la gestión de personajes y episodios de l
 
 - Docker
 - Docker Compose
+- PHP >= 8.2
+- Composer
 
 ## Instalación
 
@@ -31,7 +33,7 @@ DB_HOST=db
 DB_PORT=3306
 DB_DATABASE=rickandmorty
 DB_USERNAME=root
-DB_PASSWORD=root
+DB_PASSWORD=
 
 CACHE_DRIVER=file
 QUEUE_CONNECTION=sync
@@ -65,17 +67,47 @@ JWT_SECRET=3QcDwXqZQi8NHQlUK9VWAO3eCYH1P5qAhX7PsJGZvqBDWltugJbL2R3JckO5Prqd
 ```
 
 3. Construye y ejecuta los contenedores de Docker:
+La configuracion docker por defecto está con [Laravel Sail](https://laravel.com/docs/11.x/sail) pero se puede construir con Docker Compose
+```sail | ./vendor/bin/sail up -d```
 ```docker-compose up --build```
 
 4. Una vez que los contenedores estén en funcionamiento, abre una nueva terminal y ejecuta las migraciones para preparar la base de datos:
 bash
-```docker-compose exec app php artisan migrate```
+```
+./vendor/bin/sail artisan migrate --seed
+ó
+ocker-compose exec app php artisan migrate --seed
+```
+Esto construira la base de datos y creara el usuario pre-configurado admin. (admin@blossom.com, blossom2024)
+
+5. Ejecuta la importacion de personajes y episodios
+```
+./vendor/bin/sail artisan import:rickandmorty
+ó
+docker-compose exec app php artisan import:rickandmorty
+```
+
+6. Para terminar la ejecución
+```
+./vendor/bin/sail down
+ó
+docker-compose down
+```
 
 
 ## Uso
-La aplicación estará disponible en `http://localhost:8000`.
+La aplicación estará disponible en `http://localhost:80`.
 
 ## Endpoints Disponibles
+
+### Health Check
+
+- `GET /api/v1/health` - Healtch Check Server Status
+
+### Login
+
+- `POST /api/v1/login` - Login para usuarios (usuario por defecto: email=admin@blossom.com password=blossom2024) 
+
 
 ### Usuarios
 
@@ -113,6 +145,7 @@ La aplicación estará disponible en `http://localhost:8000`.
 - Asegúrate de que Docker y Docker Compose estén instalados en tu sistema.
 - Si encuentras problemas de conexión a la base de datos, asegúrate de que el servicio MySQL esté en funcionamiento y accesible desde el contenedor de la aplicación.
 - Puedes verificar el estado de los contenedores con el comando `docker-compose ps`.
+- Para SO Windows se debe usar `./vendor/bin/sail` bajo el subsistema de linux en Windows (WSL)
 
 ## Contribución
 
