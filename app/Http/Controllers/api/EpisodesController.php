@@ -22,7 +22,12 @@ class EpisodesController extends Controller
             ], 200);
         }
 
-        return response()->json($episodes, 200);
+        $data = [
+            'message' => 'Episodes found',
+            'data' => $episodes,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     public function store(Request $request)
@@ -69,7 +74,12 @@ class EpisodesController extends Controller
     {
         try {
             $episode = Episodes::findOrFail($id);
-            return response()->json($episode, 200);
+            $data = [
+                'message' => 'Episode found',
+                'data' => $episode,
+                'status' => 200
+            ];
+            return response()->json($data, 200);
         } catch (ModelNotFoundException $modelNotFoundException) {
             return response()->json([
                 'message' => 'Episode not found',
@@ -120,7 +130,7 @@ class EpisodesController extends Controller
 
             $data = [
                 'message' => 'Episode updated successfully',
-                'episode' => $episode,
+                'data' => $episode,
                 'status' => 200
             ];
 
@@ -197,7 +207,7 @@ class EpisodesController extends Controller
 
             return response()->json([
                 'message' => 'Episode updated successfully',
-                'episode' => $episode,
+                'data' => $episode,
                 'status' => 200
             ], 200);
         } catch (Exception $e) {
