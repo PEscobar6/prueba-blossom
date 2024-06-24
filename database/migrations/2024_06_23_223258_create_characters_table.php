@@ -22,7 +22,7 @@ return new class extends Migration
             $table->json('location');
             $table->string('image');
             $table->string('url');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
