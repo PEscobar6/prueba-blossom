@@ -593,6 +593,12 @@ La aplicación estará disponible en `http://localhost:80`.
    }
 ```
 
+## Pruebas | Testing
+Para ejecutar las pruebas se debe correr el siguiente comando
+```
+./vendor/bin/sail artisan test
+```
+
 ## Notas
 
 - Asegúrate de que Docker y Docker Compose estén instalados en tu sistema.
