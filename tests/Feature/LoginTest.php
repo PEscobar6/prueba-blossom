@@ -21,12 +21,28 @@ class LoginTest extends TestCase
     public function an_existing_user_can_login(): void
     {
         $this->withoutExceptionHandling();
-        $credentials = ['email' => 'example@example.com', 'password' => 'password'];
-        print($credentials['email'] . " " . $credentials['password'] . "\n");
-        $response = $this->postJson("api/login", $credentials);
-        print_r($response->getContent());
+        $credentials = ['email' => 'admin@blossom.com', 'password' => 'blossom2024'];
+
+        $response = $this->postJson("api/v1/login", $credentials);
+
         $response->assertStatus(200);
-        $response->assertJsonStructure(['token']);
+        $response->assertJsonStructure([
+            'message',
+            'data' => [
+                'token',
+                'expires_in',
+                'user' => [
+                    'id',
+                    'name',
+                    'email',
+                    'email_verified_at',
+                    'created_at',
+                    'updated_at',
+                ]
+            ],
+            'status',
+            'errors'
+        ]);
     }
 
     /** @test */
@@ -34,7 +50,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['email' => 'example@nonexisting.com', 'password' => 'password'];
 
-        $response = $this->postJson("api/login", $credentials);
+        $response = $this->postJson("api/v1/login", $credentials);
 
         $response->assertStatus(401);
         $response->assertJsonFragment(['status' => 401, 'message' => 'Invalid email or password']);
@@ -45,7 +61,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['password' => 'password'];
 
-        $response = $this->postJson("api/login", $credentials);
+        $response = $this->postJson("api/v1/login", $credentials);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['email']]);
@@ -57,7 +73,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['email' => 'adasdasasd', 'password' => 'password'];
 
-        $response = $this->postJson("api/login", $credentials);
+        $response = $this->postJson("api/v1/login", $credentials);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['email']]);
@@ -69,7 +85,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['email' => 123123123, 'password' => 'password'];
 
-        $response = $this->postJson("api/login", $credentials);
+        $response = $this->postJson("api/v1/login", $credentials);
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['email']]);
     }
@@ -79,7 +95,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['email' => 'example@nonexisting.com'];
 
-        $response = $this->postJson('/api/login', $credentials);
+        $response = $this->postJson('/api/v1/login', $credentials);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['password']]);
@@ -90,7 +106,7 @@ class LoginTest extends TestCase
     {
         $credentials = ['email' => 'example@nonexisting.com', 'password' => 'abcd'];
 
-        $response = $this->postJson('/api/login', $credentials);
+        $response = $this->postJson('/api/v1/login', $credentials);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['password']]);
